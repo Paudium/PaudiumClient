@@ -24,7 +24,6 @@ export default function TimeLine({ audioState, player }) {
     if (audioState === "playing") {
       setTimeInterval = setInterval(() => {
         setCurrentTime(player.currentTime);
-        console.log();
       }, 800);
     } else {
       clearInterval(setTimeInterval);
@@ -72,15 +71,14 @@ export default function TimeLine({ audioState, player }) {
           </Typography>
         </Grid>
         <Grid item xs={8}>
-          <Box mx = {1}>
+          <Box mx={1}>
             <Slider
-              value={value}
-              onChange={sliderChange}
+              value={currentTime}
+              onChange={handleChange}
               aria-label="custom thumb label"
               defaultValue={0}
             />
           </Box>
-
         </Grid>
         <Grid item xs={2}>
           <Typography gutterBottom variant="body2">

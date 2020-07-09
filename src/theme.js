@@ -6,12 +6,14 @@ let theme = createMuiTheme({
   palette: {
     primary: {
       main: "#1D2C56",
+      contrastText:"#FFF"
     },
     inherit: {
       main: "#000",
     },
     secondary: {
       main: "#FFF",
+      contrastText:"#000"
     },
     background: {
       default: "#1D2C56",
@@ -41,6 +43,7 @@ let theme = createMuiTheme({
     MuiButton: {
       root: {
         borderRadius: "none",
+        height:"46px",
       },
     },
     MuiTabPanel: {
@@ -49,6 +52,22 @@ let theme = createMuiTheme({
       },
     },
     MuiIconButton: {},
+    MuiBottomNavigationAction: {
+      root: {
+        color: "rgba(255,255,255,0.4)",
+        "&$selected": {
+          color: "#FFF",
+        },
+        disableRipple: true,
+      },
+    },
+
+    MuiBottomNavigation: {
+      root: {
+        backgroundColor: "#1D2C56",
+        borderTop:'solid 1px rgba(255,255,255,0.3)'
+      },
+    },
   },
 });
 

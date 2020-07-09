@@ -16,7 +16,6 @@ export default function Episodes() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
 
-  console.log("dataPod", dataPod);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   withRouter,
-  Link,
   Switch,
   Route,
 } from "react-router-dom";
@@ -13,16 +12,25 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { GlobalContext } from "../GlobalState/GlobalState";
 
+import { Container } from "@material-ui/core";
 import MainPlayer from "../routes/Player";
 import Episode from "../routes/Episoid/Episode";
 import Podcast from "./Podcast/Podcasts";
-import Episodes from './Episodes';
+import Episodes from "./Episodes";
 import EpisodeSection from "../routes/Episoid/EpisoidSection";
-import { Container } from "@material-ui/core";
+import PlayList from "./Playlist/Playlist";
+import Explore from "./Explore/Explor";
+import Search from "./Search/Search";
+import Profile from "./Profile/Profile";
+import Signup from "./SignUp";
+import ecommerce from "./Ecommerce/Ecommerce";
+
 import NavBar from "../components/NavBar/MediaTopBar/index";
+import BottomNavigation from "../components/BottomNavigation/BottomNavBar";
+
 import Test from "../routes/test";
 
-const Login = lazy(() => import("./Login"));
+const Login = lazy(() => import("./Login/Login"));
 const HomePage = lazy(() => import("./Home"));
 
 
@@ -36,6 +44,7 @@ const returnMainPlayer = (props) => {
   }
 };
 
+const episodePath = "/episode";
 const circularLoader = (
   <Grid
     style={{ height: "100vh" }}
@@ -48,21 +57,44 @@ const circularLoader = (
 );
 
 const CurrentSection = ({ history, location }) => {
+
+  console.log("location",location)
   return (
     <div>
       <Suspense fallback={circularLoader}>
         <NavBar />
-
         <Container maxWidth="sm">
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/episode/:episodeId" component={Episode} />
             <Route exact path="/episodesection" component={EpisodeSection} />
-            <Route exact path = "/episodes" component = {Episodes} />
+            <Route exact path="/episodes" component={Episodes} />
             <Route exact path="/test" component={Test} />
             <Route exact path="/podcast" component={Podcast} />
+            <Route exact path="/playlist" component={PlayList} />
+            <Route exact path="/search" component={Search} />
+            <Route exact path="/explore" component={Explore} />
+            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact paht="/ecommerce" component={ecommerce} />
           </Switch>
-          <Route path="/" render={(props) => returnMainPlayer(props)} />
+          {(
+            location.pathname.match(/episode/) ||
+            location.pathname.match(/podcast/) ||
+            location.pathname.match(/ecommerce/) ||
+            location.pathname.match(/episodes/)) && (
+            <Route path="/" render={(props) => returnMainPlayer(props)} />
+          )}
+
+          {(
+            location.pathname.match(/profile/) ||
+            location.pathname.match(/playlist/) ||
+            location.pathname.match(/search/) ||
+            location.pathname.match(/Explore/) ||
+            location.pathname.match(/login/)) && (
+            <Route path="/" component={BottomNavigation} />
+          )}
         </Container>
       </Suspense>
     </div>

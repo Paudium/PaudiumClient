@@ -11,6 +11,9 @@ import Grid from "@material-ui/core/Grid";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../../GlobalState/GlobalState";
+import { ACTION } from "../../Const/Action";
+import { MEDIA } from "../../Const/MediaState";
+import { AudioContext } from "../../GlobalState/AudioContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,12 +42,21 @@ export default function PodcastList({ podcasts }) {
   const classes = useStyles();
   const history = useHistory();
   const [{ currentPodcast }, dispatch] = useContext(GlobalContext);
+  const audioRef = useContext(AudioContext);
+
 
   const playSelectedItem = (data) => {
     history.push(`/episode/${data.id}`);
-    dispatch({ type: "setCurrentPodcast", snippet: data });
+    dispatch({ type: ACTION.setPodcast, snippet: data });
   };
-
+  const handlePlayer = (data) => {
+    if (data.id !== currentPodcast.id) {
+      dispatch({ type: ACTION.setPodcast, snippet: data });
+      dispatch({ type: ACTION.setPlayerState, snippet: MEDIA.PLAY });
+    }else{
+      audioRef.current.pause();
+    }
+  };
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
@@ -65,16 +77,18 @@ export default function PodcastList({ podcasts }) {
                         variant="rounded"
                         className={classes.large}
                         src="https://www.omnycontent.com/d/playlist/aaea4e69-af51-495e-afc9-a9760146922b/14a43378-edb2-49be-8511-ab0d000a7030/d1b9612f-bb1b-4b85-9c0c-ab0d004ab37a/image.jpg?t=1589407970&size=Large"
-                      >
-                        {/* <FolderIcon /> */}
-                      </Avatar>
+                      ></Avatar>
                     </ListItemAvatar>
                     <ListItemText
                       primary={podcast.title}
                       secondary={"secondary text"}
                     />
                     <ListItemSecondaryAction>
-                      <IconButton edge="end" aria-label="play">
+                      <IconButton
+                        edge="end"
+                        aria-label="play-stop"
+                        onClick={() => handlePlayer(podcast)}
+                      >
                         <PlayCircleFilledIcon
                           className={classes.playButton}
                           fontSize="large"
@@ -82,7 +96,6 @@ export default function PodcastList({ podcasts }) {
                       </IconButton>
                     </ListItemSecondaryAction>
                   </ListItem>
-                  {/* <Divider component="li" className = {classes.divider}/> */}
                 </div>
               ))}
           </List>

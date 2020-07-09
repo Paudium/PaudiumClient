@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import MediaData from "../../asset/Supernotes - Pod_Notes.json";
 import { Paper, Grid, IconButton, Box, Icon, Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Like from "./Components/Icons/LikeIconFilled";
 import Dislike from "./Components/Icons/DislikeIcon";
 import Pencil from "./Components/Icons/EditIcon";
-import MenuIcon from "./Components/Icons/MenuIcon";
 import BookMarkIcon from "./Components/Icons/BookmarkIcon";
 import BackButton from "./Components/Icons/BackButton";
 import BackDisp from "./Components/Icons/BackDisp";
@@ -21,7 +19,11 @@ import PlayStopIcon from "../MediaPlayer/Components/Icons/Stop";
 import Typography from "@material-ui/core/Typography";
 
 import { GlobalContext } from "../../GlobalState/GlobalState";
+import { AudioContext } from "../../GlobalState/AudioContext";
+
+import { ACTION } from "../../Const/Action";
 import "./style.css";
+import { MEDIA } from "../../Const/MediaState";
 
 let relatedVideosVar;
 
@@ -39,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "30px",
     bottom: 0,
     left: 0,
+    width: "100vw",
   },
   minContainer: {
     borderRadius: "10px",
@@ -79,12 +82,18 @@ export default function MediaPlayer({ location, history }) {
     GET_PODCAST
   );
 
-  const [{ currentPodcast }, dispatch] = useContext(GlobalContext);
+  const [{ currentPodcast, currentPlayStatus }, dispatch] = useContext(
+    GlobalContext
+  );
+
+  const audioRef = useContext(AudioContext);
+
+
   const [playerState, setPlayerState] = useState("maximized");
   //there will be 3 states
   // maximized, minimized, playlist
   const [isItFromPlaylist, setIsItFromPlaylist] = useState(false);
-  const [audioState, setAudioState] = useState("playing");
+  // const [audioState, setAudioState] = useState("playing");
   //thre will be 4 states
   //loading, loaded, playing, paused
 
@@ -128,7 +137,7 @@ export default function MediaPlayer({ location, history }) {
   };
 
   const setcurrentPodcast = (data) => {
-    dispatch({ type: "setcurrentPodcast", snippet: data });
+    dispatch({ type: ACTION.setPodcast, snippet: data });
   };
 
   const setVideoSnippet = (video) => {
@@ -147,16 +156,6 @@ export default function MediaPlayer({ location, history }) {
     }
   };
 
-  //   const setAudioSrcAndPlay = async (id) => {
-  //     const res = await getAudioLink.get("/song", {
-  //       params: { id: id },
-  //     });
-
-  //     // set the audio data
-  //     audioPlayer.current.src = res.data;
-  //     playAudio();
-  //   };
-
   const playNext = () => {
     // also set this is from playlist
     setIsItFromPlaylist(true);
@@ -164,12 +163,8 @@ export default function MediaPlayer({ location, history }) {
     const currentIndex = relatedVideosVar.findIndex(
       (video) => video.id.videoId === currentPodcast.id
     );
-    console.log("the current index is", currentIndex);
-
     let video;
-    console.log("hey we will play next song");
     video = relatedVideosVar[currentIndex + 1]; //we will play the next song
-
     setVideoSnippet(video);
   };
 
@@ -206,11 +201,10 @@ export default function MediaPlayer({ location, history }) {
         // Auto-play was prevented
         // Show paused UI.
         console.log("playback prevented");
-        setAudioState("paused");
+        dispatch({ type: ACTION.setPlayerState, snippet: MEDIA.PAUSE });
       });
   };
 
-  console.log(MediaData);
   let initPosition = 0;
   const containerRef = useRef(null);
 
@@ -304,7 +298,11 @@ export default function MediaPlayer({ location, history }) {
   });
 
   const handleToggle = () => {
-    player.pause();
+    if (currentPlayStatus === MEDIA.PLAY) {
+      player.pause();
+    } else if (currentPlayStatus === MEDIA.PAUSE) {
+      player.play();
+    }
   };
 
   const classes = useStyles();
@@ -343,8 +341,8 @@ export default function MediaPlayer({ location, history }) {
                 <Content />
               </Grid>
               <Grid item xs={12}>
-                {/* third */}
-                <TimeLine audioState={audioState} player={player} />
+                {console.log("PLayer in media", player)}
+                <TimeLine audioState={currentPlayStatus} player={audioRef.current} />
                 <Grid
                   container
                   direction="row"
@@ -377,12 +375,12 @@ export default function MediaPlayer({ location, history }) {
               spacing={1}
             >
               <Grid item xs={2}>
-                <Avatar variant = "rounded" src = {currentPodcast.image} />
+                <Avatar variant="rounded" src={currentPodcast.image} />
               </Grid>
               <Grid item xs={6}>
-                <Box ml = {-2} mb = {-2}>
+                <Box ml={-2} mb={-2}>
                   <Typography noWrap>Q&A with Andrew Wilkinso...</Typography>
-                  <TimeLine />
+                  <TimeLine audioState={currentPlayStatus} player={audioRef.current} />
                 </Box>
               </Grid>
               <Grid item xs={3} container spacing={1}>
@@ -400,18 +398,23 @@ export default function MediaPlayer({ location, history }) {
       <audio
         // onTimeUpdate={timeUpdate}
         onLoadStart={() => {
-          setAudioState("loading");
+          dispatch({ type: ACTION.setPlayerState, snippet: MEDIA.LOADING });
         }}
         id="audio-element"
-        // onLoadedData={updateSongDB}
         // crossOrigin="anonymous"
-        onPlay={() => setAudioState("playing")}
-        onPlaying={() => setAudioState("playing")}
-        onPause={() => setAudioState("paused")}
+        onPlay={() =>
+          dispatch({ type: ACTION.setPlayerState, snippet: MEDIA.PLAY })
+        }
+        onPlaying={() =>
+          dispatch({ type: ACTION.setPlayerState, snippet: MEDIA.PLAY })
+        }
+        onPause={() =>
+          dispatch({ type: ACTION.setPlayerState, snippet: MEDIA.PAUSE })
+        }
         onEnded={songEnded}
         autoPlay
-        ref={audioPlayer}
-        src="https://chtbl.com/track/288D49/traffic.omny.fm/d/clips/aaea4e69-af51-495e-afc9-a9760146922b/14a43378-edb2-49be-8511-ab0d000a7030/32a20ed3-ee42-4974-8d6b-abeb018a64ea/audio.mp3?utm_source=Podcast&in_playlist=d1b9612f-bb1b-4b85-9c0c-ab0d004ab37a"
+        ref={audioRef}
+        src={currentPodcast.audioURL}
       />
     </div>
   );
