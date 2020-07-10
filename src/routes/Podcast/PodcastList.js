@@ -42,21 +42,23 @@ export default function PodcastList({ podcasts }) {
   const classes = useStyles();
   const history = useHistory();
   const [{ currentPodcast }, dispatch] = useContext(GlobalContext);
+  const {currentPlayStatus} = useContext(GlobalContext);
   const audioRef = useContext(AudioContext);
-
 
   const playSelectedItem = (data) => {
     history.push(`/episode/${data.id}`);
     dispatch({ type: ACTION.setPodcast, snippet: data });
   };
   const handlePlayer = (data) => {
-    if (data.id !== currentPodcast.id) {
+    if (data.id !== currentPodcast.id||currentPlayStatus ===MEDIA.PAUSE) {
       dispatch({ type: ACTION.setPodcast, snippet: data });
       dispatch({ type: ACTION.setPlayerState, snippet: MEDIA.PLAY });
-    }else{
+    } else {
       audioRef.current.pause();
     }
   };
+
+  console.log("podcasts",podcasts);
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
@@ -76,7 +78,7 @@ export default function PodcastList({ podcasts }) {
                       <Avatar
                         variant="rounded"
                         className={classes.large}
-                        src="https://www.omnycontent.com/d/playlist/aaea4e69-af51-495e-afc9-a9760146922b/14a43378-edb2-49be-8511-ab0d000a7030/d1b9612f-bb1b-4b85-9c0c-ab0d004ab37a/image.jpg?t=1589407970&size=Large"
+                        src={podcast.imageURL}
                       ></Avatar>
                     </ListItemAvatar>
                     <ListItemText

@@ -20,6 +20,7 @@ import Typography from "@material-ui/core/Typography";
 
 import { GlobalContext } from "../../GlobalState/GlobalState";
 import { AudioContext } from "../../GlobalState/AudioContext";
+import { AuthContext } from "../../GlobalState/AuthContext";
 
 import { ACTION } from "../../Const/Action";
 import "./style.css";
@@ -86,8 +87,9 @@ export default function MediaPlayer({ location, history }) {
     GlobalContext
   );
 
-  const audioRef = useContext(AudioContext);
+  const auth = useContext(AuthContext);
 
+  const audioRef = useContext(AudioContext);
 
   const [playerState, setPlayerState] = useState("maximized");
   //there will be 3 states
@@ -140,22 +142,6 @@ export default function MediaPlayer({ location, history }) {
     dispatch({ type: ACTION.setPodcast, snippet: data });
   };
 
-  const setVideoSnippet = (video) => {
-    setcurrentPodcast({
-      id: video.id.videoId,
-      title: video.snippet.title,
-      channelTitle: video.snippet.channelTitle,
-      maxThumbnail: `https://img.youtube.com/vi/${video.id.videoId}/hqdefault.jpg`,
-      sdThumbnail: `https://img.youtube.com/vi/${video.id.videoId}/sddefault.jpg`,
-      // this is the url of the max resolution of thumbnail
-    });
-
-    // if window is minimized then only we will run this function
-    if (document.hidden) {
-      //   setAudioSrcAndPlay(video.id.videoId);
-    }
-  };
-
   const playNext = () => {
     // also set this is from playlist
     setIsItFromPlaylist(true);
@@ -165,7 +151,6 @@ export default function MediaPlayer({ location, history }) {
     );
     let video;
     video = relatedVideosVar[currentIndex + 1]; //we will play the next song
-    setVideoSnippet(video);
   };
 
   const playPrevious = () => {
@@ -181,7 +166,6 @@ export default function MediaPlayer({ location, history }) {
       let video;
       if (currentIndex !== -1) {
         video = relatedVideosVar[currentIndex - 1]; //we will play the next song
-        setVideoSnippet(video);
       } else {
         player.currentTime = 0;
       }
@@ -342,7 +326,10 @@ export default function MediaPlayer({ location, history }) {
               </Grid>
               <Grid item xs={12}>
                 {console.log("PLayer in media", player)}
-                <TimeLine audioState={currentPlayStatus} player={audioRef.current} />
+                <TimeLine
+                  audioState={currentPlayStatus}
+                  player={audioRef.current}
+                />
                 <Grid
                   container
                   direction="row"
@@ -380,7 +367,10 @@ export default function MediaPlayer({ location, history }) {
               <Grid item xs={6}>
                 <Box ml={-2} mb={-2}>
                   <Typography noWrap>Q&A with Andrew Wilkinso...</Typography>
-                  <TimeLine audioState={currentPlayStatus} player={audioRef.current} />
+                  <TimeLine
+                    audioState={currentPlayStatus}
+                    player={audioRef.current}
+                  />
                 </Box>
               </Grid>
               <Grid item xs={3} container spacing={1}>

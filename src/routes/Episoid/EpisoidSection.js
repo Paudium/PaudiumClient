@@ -5,25 +5,30 @@ import Grid from "@material-ui/core/Grid";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import EpisodePlayer from './Components/EpisodePlayer';
-import Contributors from './Components/Contributors';
-
-
+import EpisodePlayer from "./Components/EpisodePlayer";
+import Contributors from "./Components/Contributors";
+import { useHistory } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 const useStyle = makeStyles((theme) => ({
   title: {
     alignItems: "center",
   },
   container: {
-    borderRadius: 30,
+    position: "fixed",
+    borderRadius: 0,
+    top: 0,
+    left: 0,
+    height: "100vh",
   },
 }));
 
 export default function Episoid() {
   const classes = useStyle();
+  const history = useHistory();
   return (
-    <div>
-      <Paper className={classes.container}>
+    <Paper className={classes.container}>
+      <Container>
         <Grid container direction="column">
           <Grid item container justify="space-between" alignItems="center">
             <Grid item xs={1}></Grid>
@@ -31,16 +36,15 @@ export default function Episoid() {
               <Typography>Episode Section</Typography>
             </Grid>
             <Grid item>
-              <IconButton>
+              <IconButton onClick={() => history.push("/podcast")}>
                 <CloseIcon />
               </IconButton>
             </Grid>
           </Grid>
-          <SuperQuote />
-          <EpisodePlayer/>
-          <Contributors/>
+          <EpisodePlayer />
+          <Contributors />
         </Grid>
-      </Paper>
-    </div>
+      </Container>
+    </Paper>
   );
 }

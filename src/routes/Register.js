@@ -1,98 +1,216 @@
-import React, { useContext, useState } from 'react';
-import { Button, Form } from 'semantic-ui-react';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import React, { useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { useHistory } from "react-router-dom";
 
-import { AuthContext } from '../context/auth';
-import { useForm } from '../util/hooks';
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
-function Register(props) {
-  const context = useContext(AuthContext);
+const LoginButton = withStyles((theme) => ({
+  root: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    backgroundColor: "#FFF",
+    borderRadius: "4px",
+  },
+}))((props) => <Button disableRipple {...props} />);
+
+const SignTextField = withStyles((theme) => ({
+  root: {
+    borderColor: "#FFF",
+    backgroundColor: "rgba(255,255,255,1)",
+    borderRadius: "4px",
+    marginTop: theme.spacing(2),
+  },
+}))((props) => <TextField {...props} />);
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  form: {
+    marginTop: theme.spacing(3),
+  },
+}));
+
+export default function SignUp() {
+  const classes = useStyles();
+  const history = useHistory();
   const [errors, setErrors] = useState({});
-
-  const { onChange, onSubmit, values } = useForm(registerUser, {
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(
-      _,
-      {
-        data: { register: userData }
-      }
-    ) {
-      context.login(userData);
-      props.history.push('/');
+    update(proxy, result) {
+      console.log(result);
+      history.push('/podcast');
     },
     onError(err) {
+      console.log(err.graphQLErrors[0].extensions.exception.errors);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    variables: values
+    variables: values,
   });
 
-  function registerUser() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     addUser();
-  }
+  };
+
+  const onChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+  console.log(values);
 
   return (
-    <div className="form-container">
-      <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
-        <h1>Register</h1>
-        <Form.Input
-          label="Username"
-          placeholder="Username.."
-          name="username"
-          type="text"
-          value={values.username}
-          error={errors.username ? true : false}
-          onChange={onChange}
-        />
-        <Form.Input
-          label="Email"
-          placeholder="Email.."
-          name="email"
-          type="email"
-          value={values.email}
-          error={errors.email ? true : false}
-          onChange={onChange}
-        />
-        <Form.Input
-          label="Password"
-          placeholder="Password.."
-          name="password"
-          type="password"
-          value={values.password}
-          error={errors.password ? true : false}
-          onChange={onChange}
-        />
-        <Form.Input
-          label="Confirm Password"
-          placeholder="Confirm Password.."
-          name="confirmPassword"
-          type="password"
-          value={values.confirmPassword}
-          error={errors.confirmPassword ? true : false}
-          onChange={onChange}
-        />
-        <Button type="submit" primary>
-          Register
-        </Button>
-      </Form>
-      {Object.keys(errors).length > 0 && (
-        <div className="ui error message">
-          <ul className="list">
-            {Object.values(errors).map((value) => (
-              <li key={value}>{value}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5" color="secondary">
+          Sign up
+        </Typography>
+        <form className={classes.form}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <SignTextField
+                error={errors.username ? true : false}
+                helperText={errors.username ? errors.username : ""}
+                onChange={(event) => onChange(event)}
+                autoComplete="off"
+                variant="outlined"
+                required
+                fullWidth
+                id="username"
+                // label="Last Name"
+                name="username"
+                placeholder="Enter your name"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <SignTextField
+                error={errors.email ? true : false}
+                helperText={errors.email ? errors.email : ""}
+                onChange={(event) => onChange(event)}
+                autoComplete="off"
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                // label="Email Address"
+                name="email"
+                placeholder="Enter your email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <SignTextField
+                error={errors.password ? true : false}
+                helperText={errors.password ? errors.password : ""}
+                onChange={(event) => onChange(event)}
+                autoComplete="off"
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                // label="Password"
+                type="password"
+                id="password"
+                placeholder=" Password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <SignTextField
+                error={errors.confirmPassword ? true : false}
+                helperText={
+                  errors.confirmPassword ? errors.confirmPassword : ""
+                }
+                onChange={(event) => onChange(event)}
+                autoComplete="off"
+                variant="outlined"
+                required
+                fullWidth
+                name="confirmPassword"
+                // label="Password"
+                type="password"
+                id="password"
+                placeholder=" Confirm Password"
+              />
+            </Grid>
+            {/* <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="I want to receive inspiration, marketing promotions and updates via email."
+                color = "secondary"
+              />
+            </Grid> */}
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+            onClick={handleSubmit}
+          >
+            Sign Up
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="#" variant="body2">
+                Already have an account? <Link href="/login">Sign in</Link>
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={5}>{/* <Copyright /> */}</Box>
+    </Container>
   );
 }
+
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://material-ui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const REGISTER_USER = gql`
   mutation register(
@@ -117,5 +235,3 @@ const REGISTER_USER = gql`
     }
   }
 `;
-
-export default Register;

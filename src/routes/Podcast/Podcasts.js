@@ -101,9 +101,10 @@ export default function Podcasts() {
           alignItems="flex-end"
         >
           <Grid item xs={5}>
+            {console.log(dataPod&&dataPod)}
             <Paper elevation={3}>
               <img
-                src="https://www.omnycontent.com/d/playlist/aaea4e69-af51-495e-afc9-a9760146922b/14a43378-edb2-49be-8511-ab0d000a7030/d1b9612f-bb1b-4b85-9c0c-ab0d004ab37a/image.jpg?t=1589407970&size=Large"
+                src={dataPod&&dataPod.podcasts[0].imageURL}
                 width="100%"
                 alt="post"
               />

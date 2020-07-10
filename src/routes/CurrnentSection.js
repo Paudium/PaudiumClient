@@ -22,7 +22,6 @@ import PlayList from "./Playlist/Playlist";
 import Explore from "./Explore/Explor";
 import Search from "./Search/Search";
 import Profile from "./Profile/Profile";
-import Signup from "./SignUp";
 import ecommerce from "./Ecommerce/Ecommerce";
 
 import NavBar from "../components/NavBar/MediaTopBar/index";
@@ -31,8 +30,8 @@ import BottomNavigation from "../components/BottomNavigation/BottomNavBar";
 import Test from "../routes/test";
 
 const Login = lazy(() => import("./Login/Login"));
+const Register = lazy(() => import("./Register"));
 const HomePage = lazy(() => import("./Home"));
-
 
 const returnMainPlayer = (props) => {
   // we will return the main player if the path is not the "/"
@@ -57,8 +56,7 @@ const circularLoader = (
 );
 
 const CurrentSection = ({ history, location }) => {
-
-  console.log("location",location)
+  console.log("location", location);
   return (
     <div>
       <Suspense fallback={circularLoader}>
@@ -76,22 +74,21 @@ const CurrentSection = ({ history, location }) => {
             <Route exact path="/explore" component={Explore} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
-            <Route exact paht="/ecommerce" component={ecommerce} />
+            <Route exact path="/signup" component={Register} />
+            <Route exact path="/ecommerce" component={ecommerce} />
           </Switch>
-          {(
-            location.pathname.match(/episode/) ||
+          {(location.pathname.match(/episode/) ||
             location.pathname.match(/podcast/) ||
             location.pathname.match(/ecommerce/) ||
             location.pathname.match(/episodes/)) && (
             <Route path="/" render={(props) => returnMainPlayer(props)} />
           )}
 
-          {(
+          {(location.pathname==="/" ||
             location.pathname.match(/profile/) ||
             location.pathname.match(/playlist/) ||
             location.pathname.match(/search/) ||
-            location.pathname.match(/Explore/) ||
+            location.pathname.match(/explore/) ||
             location.pathname.match(/login/)) && (
             <Route path="/" component={BottomNavigation} />
           )}

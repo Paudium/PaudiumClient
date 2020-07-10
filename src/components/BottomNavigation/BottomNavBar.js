@@ -48,7 +48,7 @@ export default function BottomNavBar() {
         value="explore"
         icon={<ExplorerIcon  />}
         color="secondary"
-        onClick = {()=>{history.push('/Explore')}}
+        onClick = {()=>{history.push('/explore')}}
 
       />
       <BottomNavigationAction
