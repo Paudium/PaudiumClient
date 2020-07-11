@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { GlobalState } from "./GlobalState/GlobalState";
 import { AudioControl } from "./GlobalState/AudioContext";
-import Episode from "./routes/Episoid/EpisoidSection";
+import Episode from "./routes/Episoid/Chapters";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { AuthProvider } from "./GlobalState/AuthContext";

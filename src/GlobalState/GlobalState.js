@@ -1,6 +1,10 @@
 import React, { useReducer, createContext} from "react";
 import {MEDIA} from '../Const/MediaState';
 import {ACTION} from '../Const/Action';
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+
+
 
 export const GlobalContext = createContext();
 
@@ -36,3 +40,16 @@ export const GlobalState = (props) => {
     </GlobalContext.Provider>
   );
 };
+
+
+const GET_EPISODE = gql`
+  query($episodeId: ID!) {
+    getPodcast(podcastId: $episodeId) {
+      id
+      title
+      imageURL
+      audioURL
+      description
+    }
+  }
+`;

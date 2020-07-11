@@ -17,17 +17,20 @@ import MainPlayer from "../routes/Player";
 import Episode from "../routes/Episoid/Episode";
 import Podcast from "./Podcast/Podcasts";
 import Episodes from "./Episodes";
-import EpisodeSection from "../routes/Episoid/EpisoidSection";
+import Chapters from "./Episoid/Chapters";
 import PlayList from "./Playlist/Playlist";
 import Explore from "./Explore/Explor";
 import Search from "./Search/Search";
 import Profile from "./Profile/Profile";
 import ecommerce from "./Ecommerce/Ecommerce";
 
+
+
 import NavBar from "../components/NavBar/MediaTopBar/index";
 import BottomNavigation from "../components/BottomNavigation/BottomNavBar";
 
 import Test from "../routes/test";
+import Chapter from '../routes/Episoid/Components/Chapter'
 
 const Login = lazy(() => import("./Login/Login"));
 const Register = lazy(() => import("./Register"));
@@ -65,10 +68,12 @@ const CurrentSection = ({ history, location }) => {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/episode/:episodeId" component={Episode} />
-            <Route exact path="/episodesection" component={EpisodeSection} />
+            <Route exact path="/chapters/:episodeId" component={Chapters} />
+            <Route exact path = "/chapter" component = {Chapter}/>
             <Route exact path="/episodes" component={Episodes} />
-            <Route exact path="/test" component={Test} />
             <Route exact path="/podcast" component={Podcast} />
+
+            <Route exact path="/test" component={Test} />
             <Route exact path="/playlist" component={PlayList} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/explore" component={Explore} />
@@ -79,6 +84,7 @@ const CurrentSection = ({ history, location }) => {
           </Switch>
           {(location.pathname.match(/episode/) ||
             location.pathname.match(/podcast/) ||
+            location.pathname.match(/chapters/) ||
             location.pathname.match(/ecommerce/) ||
             location.pathname.match(/episodes/)) && (
             <Route path="/" render={(props) => returnMainPlayer(props)} />

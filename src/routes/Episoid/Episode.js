@@ -1,9 +1,9 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
-import { GlobalContext } from "../../GlobalState/GlobalState"; 
+import { GlobalContext } from "../../GlobalState/GlobalState";
 
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
@@ -17,17 +17,27 @@ export default function Episode({ match }) {
   const classes = useStyles();
   const [{ currentPodcast }, dispatch] = useContext(GlobalContext);
 
-  const { loading: loadingPod, error: errorPod, data: dataPod } = useQuery(
-    GET_EPISODE
+  console.log("To find the episode id", match);
+
+  let episodeId = match.params.episodeId;
+  console.log("Episode id is ", episodeId);
+
+  const { loading: loadingPod, error: errorPod, data: episode } = useQuery(
+    GET_EPISODE,
+    {
+      variables: { episodeId },
+    }
   );
+
+  console.log("Query result", episode&&episode.getPodcast.title);
+
   return (
     <div className={classes.root}>
       <CardMedia
         component="img"
-        alt="Contemplative Reptile"
-        width="50%"
-        image="https://www.omnycontent.com/d/playlist/aaea4e69-af51-495e-afc9-a9760146922b/14a43378-edb2-49be-8511-ab0d000a7030/d1b9612f-bb1b-4b85-9c0c-ab0d004ab37a/image.jpg?t=1589407970&size=Large"
-        title="Contemplative Reptile"
+        alt={episode&&episode.getPodcast.title}
+        image={episode&&episode.getPodcast.imageURL}
+        title={episode&&episode.getPodcast.title}
       />
       <CardContent>
         <Typography
@@ -37,7 +47,10 @@ export default function Episode({ match }) {
           color="secondary"
           align="center"
         >
-          {currentPodcast && currentPodcast.title}
+          {episode&&episode.getPodcast.title}
+        </Typography>
+        <Typography variant = "body1" color = "secondary">
+        {episode&&episode.getPodcast.description}
         </Typography>
       </CardContent>
     </div>
@@ -45,10 +58,13 @@ export default function Episode({ match }) {
 }
 
 const GET_EPISODE = gql`
-  {
-    getPodcast(podcastId: "5f021cc65879be89246b2cbe") {
+  query($episodeId: ID!) {
+    getPodcast(podcastId: $episodeId) {
       id
       title
+      imageURL
+      audioURL
+      description
     }
   }
 `;

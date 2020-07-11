@@ -42,7 +42,7 @@ export default function PodcastList({ podcasts }) {
   const classes = useStyles();
   const history = useHistory();
   const [{ currentPodcast }, dispatch] = useContext(GlobalContext);
-  const {currentPlayStatus} = useContext(GlobalContext);
+  const { currentPlayStatus } = useContext(GlobalContext);
   const audioRef = useContext(AudioContext);
 
   const playSelectedItem = (data) => {
@@ -50,7 +50,7 @@ export default function PodcastList({ podcasts }) {
     dispatch({ type: ACTION.setPodcast, snippet: data });
   };
   const handlePlayer = (data) => {
-    if (data.id !== currentPodcast.id||currentPlayStatus ===MEDIA.PAUSE) {
+    if (data.id !== currentPodcast.id || currentPlayStatus === MEDIA.PAUSE) {
       dispatch({ type: ACTION.setPodcast, snippet: data });
       dispatch({ type: ACTION.setPlayerState, snippet: MEDIA.PLAY });
     } else {
@@ -58,51 +58,43 @@ export default function PodcastList({ podcasts }) {
     }
   };
 
-  console.log("podcasts",podcasts);
+  console.log("podcasts", podcasts);
   return (
-    <div className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
           <List>
             {podcasts &&
               podcasts.map((podcast) => (
-                <div>
-                  <ListItem
-                    key={podcast.id}
-                    disableGutters
-                    divider={true}
-                    button
-                    onClick={() => playSelectedItem(podcast)}
-                  >
-                    <ListItemAvatar>
-                      <Avatar
-                        variant="rounded"
-                        className={classes.large}
-                        src={podcast.imageURL}
-                      ></Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={podcast.title}
-                      secondary={"secondary text"}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        edge="end"
-                        aria-label="play-stop"
-                        onClick={() => handlePlayer(podcast)}
-                      >
-                        <PlayCircleFilledIcon
-                          className={classes.playButton}
-                          fontSize="large"
-                        />
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                </div>
+                <ListItem
+                  key={podcast.id}
+                  disableGutters
+                  divider={true}
+                  button
+                  onClick={() => playSelectedItem(podcast)}
+                >
+                  <ListItemAvatar>
+                    <Avatar
+                      variant="rounded"
+                      className={classes.large}
+                      src={podcast.imageURL}
+                    ></Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={podcast.title}
+                    secondary={"secondary text"}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      aria-label="play-stop"
+                      onClick={() => handlePlayer(podcast)}
+                    >
+                      <PlayCircleFilledIcon
+                        className={classes.playButton}
+                        fontSize="large"
+                      />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
               ))}
           </List>
-        </Grid>
-      </Grid>
-    </div>
   );
 }

@@ -111,7 +111,6 @@ export default function Podcasts() {
             </Paper>
           </Grid>
           <Grid item xs={7}>
-            <Box>
               <Typography
                 variant="h5"
                 align="left"
@@ -129,7 +128,6 @@ export default function Podcasts() {
               >
                 Subscribe
               </Button>
-            </Box>
           </Grid>
         </Grid>
       </Box>
@@ -179,7 +177,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box>
-          <Typography>{children}</Typography>
+         {children}
         </Box>
       )}
     </div>

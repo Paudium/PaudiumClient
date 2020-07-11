@@ -29,7 +29,7 @@ const history = useHistory();
           cy="3.55556"
           r="2.55556"
           stroke="#1D2C56"
-          stroke-width="2"
+          strokeWidth="2"
           fill="none"
         />
         <circle
@@ -37,7 +37,7 @@ const history = useHistory();
           cy="12.4442"
           r="2.55556"
           stroke="#1D2C56"
-          stroke-width="2"
+          strokeWidth="2"
           fill="none"
         />
         <rect

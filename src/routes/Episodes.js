@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import {makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import PodcastList from "./Podcast/PodcastList";
 
-const useStyles = makeStyles((theme)=>({
-
-})) 
+const useStyles = makeStyles((theme) => ({}));
 
 export default function Episodes() {
   const { loading: loadingPod, error: errorPod, data: dataPod } = useQuery(

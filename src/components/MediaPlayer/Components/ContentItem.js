@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import Typography from "@material-ui/core/Typography";
 import MenuIcon from "./Icons/MenuIcon";
 import EditIcon from "./Icons/EditIcon";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, IconButton } from "@material-ui/core";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../../GlobalState/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -24,20 +25,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-export default function ContentItem() {
+export default function ContentItem({title,id}) {
   const classes = useStyles();
   const history = useHistory();
+  const auth = useContext(AuthContext);
+
+  const handleEdit = () => {
+      history.push(`/chapters/${id}`);
+    // history.push("/login");
+  };
+
   return (
     <Grid container justify="space-between" alignItems="center">
-      <MenuIcon/>
+      <MenuIcon />
       <Grid item xs zeroMinWidth>
         <Typography noWrap>
-          Warning: Do NOT open a restsefewfefwefwefwef
+         {title}
         </Typography>
       </Grid>
-      <IconButton className={classes.iconButton} onClick = {()=>{history.push("/episodesection")}}>
+      <IconButton className={classes.iconButton} onClick={() => handleEdit()}>
         <EditIcon color="primary" />
       </IconButton>
     </Grid>

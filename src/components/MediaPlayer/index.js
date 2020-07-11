@@ -89,6 +89,8 @@ export default function MediaPlayer({ location, history }) {
 
   const auth = useContext(AuthContext);
 
+  console.log("auth on mediaplay", auth);
+
   const audioRef = useContext(AudioContext);
 
   const [playerState, setPlayerState] = useState("maximized");
@@ -102,8 +104,7 @@ export default function MediaPlayer({ location, history }) {
   const [minimized, setMinimized] = useState(true);
   const body = document.querySelector("body");
 
-  const audioPlayer = useRef();
-  const player = audioPlayer.current;
+  const player = audioRef.current;
 
   const setupMediaSessions = () => {
     if ("mediaSession" in navigator) {
@@ -127,7 +128,7 @@ export default function MediaPlayer({ location, history }) {
       });
       navigator.mediaSession.setActionHandler("pause", () => {
         /* Code excerpted. */
-        audioPlayer.current.pause();
+        audioRef.current.pause();
       });
       navigator.mediaSession.setActionHandler("previoustrack", () => {
         playPrevious();
@@ -173,7 +174,7 @@ export default function MediaPlayer({ location, history }) {
   };
 
   const playAudio = () => {
-    audioPlayer.current
+    audioRef.current
       .play()
       .then((_) => {
         // Automatic playback started!
@@ -313,7 +314,7 @@ export default function MediaPlayer({ location, history }) {
                     alignItems="center"
                   >
                     <Like color="primary" />
-                    <Dislike color="default" />
+                    <Dislike color="secondary" />
                     <BookMarkIcon />
                     <Pencil />
                   </Grid>
@@ -322,7 +323,7 @@ export default function MediaPlayer({ location, history }) {
 
               <Grid item xs={12}>
                 {/* second */}
-                <Content />
+                <Content title={currentPodcast.title} id={currentPodcast.id} />
               </Grid>
               <Grid item xs={12}>
                 {console.log("PLayer in media", player)}
