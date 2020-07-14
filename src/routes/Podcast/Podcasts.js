@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     paddingLeft: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
   },
 
   title: {
@@ -101,33 +100,34 @@ export default function Podcasts() {
           alignItems="flex-end"
         >
           <Grid item xs={5}>
-            {console.log(dataPod&&dataPod)}
+            {console.log(dataPod && dataPod)}
             <Paper elevation={3}>
               <img
-                src={dataPod&&dataPod.podcasts[0].imageURL}
+                src={dataPod && dataPod.podcasts[0].imageURL}
                 width="100%"
                 alt="post"
               />
             </Paper>
           </Grid>
           <Grid item xs={7}>
-              <Typography
-                variant="h5"
-                align="left"
-                className={classes.title}
-                color="secondary"
-              >
-                Freakonomics Radio
-              </Typography>
-              <Button
-                className={classes.controls}
-                variant="outlined"
-                fullWidth
-                color="secondary"
-                startIcon={<BookmarkIcon color = "secondary" />}
-              >
-                Subscribe
-              </Button>
+            <Typography
+              variant="h5"
+              align="left"
+              className={classes.title}
+              color="secondary"
+            >
+              {console.log("dataPod", dataPod)}
+              {dataPod && dataPod.title}
+            </Typography>
+            <Button
+              className={classes.controls}
+              variant="outlined"
+              fullWidth
+              color="secondary"
+              startIcon={<BookmarkIcon color="secondary" />}
+            >
+              Subscribe
+            </Button>
           </Grid>
         </Grid>
       </Box>
@@ -159,7 +159,6 @@ const GET_PODCAST = gql`
       imageURL
       audioURL
       podTitle
-     
     }
   }
 `;
@@ -175,11 +174,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box>
-         {children}
-        </Box>
-      )}
+      {value === index && <Box>{children}</Box>}
     </div>
   );
 }

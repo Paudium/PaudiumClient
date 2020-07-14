@@ -108,8 +108,6 @@ export default function MediaPlayer({ location, history }) {
 
   const setupMediaSessions = () => {
     if ("mediaSession" in navigator) {
-      console.log("navigator setupped");
-
       navigator.mediaSession.metadata = new window.MediaMetadata({
         // title: currentPodcast.title,
         title: currentPodcast.title,
@@ -179,13 +177,11 @@ export default function MediaPlayer({ location, history }) {
       .then((_) => {
         // Automatic playback started!
         // Show playing UI.
-        console.log("audio played auto");
         setupMediaSessions();
       })
       .catch((error) => {
         // Auto-play was prevented
         // Show paused UI.
-        console.log("playback prevented");
         dispatch({ type: ACTION.setPlayerState, snippet: MEDIA.PAUSE });
       });
   };
@@ -326,7 +322,6 @@ export default function MediaPlayer({ location, history }) {
                 <Content title={currentPodcast.title} id={currentPodcast.id} />
               </Grid>
               <Grid item xs={12}>
-                {console.log("PLayer in media", player)}
                 <TimeLine
                   audioState={currentPlayStatus}
                   player={audioRef.current}
@@ -363,11 +358,12 @@ export default function MediaPlayer({ location, history }) {
               spacing={1}
             >
               <Grid item xs={2}>
-                <Avatar variant="rounded" src={currentPodcast.image} />
+                {console.log("podcast Image URL",currentPodcast)}
+                <Avatar variant="rounded" src={currentPodcast&&currentPodcast.imageURL} />
               </Grid>
               <Grid item xs={6}>
                 <Box ml={-2} mb={-2}>
-                  <Typography noWrap>Q&A with Andrew Wilkinso...</Typography>
+                  <Typography noWrap>{currentPodcast&&currentPodcast.title}</Typography>
                   <TimeLine
                     audioState={currentPlayStatus}
                     player={audioRef.current}

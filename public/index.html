@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -44,7 +44,23 @@
       window.onLoad = function () {
         window.scrollTo(0, 1);
       };
-      
     </script>
+
+    <!-- <script src="ecwidjs.js"></script> -->
+    <script src="test.js"></script>
+
+    <script
+      data-cfasync="false"
+      type="text/javascript"
+      src="https://app.ecwid.com/script.js?32329017&data_platform=code&data_date=2020-07-13"
+      charset="utf-8"
+    ></script>
+    <script type="text/javascript">
+      function init() {
+        Ecwid.init();
+      }
+    </script>
+
+    <!-- <div class="ec-cart-widget"></div> -->
   </body>
 </html>

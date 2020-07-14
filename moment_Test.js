@@ -8,4 +8,3 @@ let diff = end.diff(start);
 // execution
 // let f = moment.duration(diff).format("HH:mm:ss");
 // console.log(f);
-console.log(moment.duration(123, "minutes").format("h:mm"));

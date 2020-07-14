@@ -1,50 +1,73 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/SearchOutlined";
 import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
+import CancelIcon from "@material-ui/icons/Cancel";
+import Grid from '@material-ui/core/Grid';
+
+
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: "2px 4px",
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(0),
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(3),
+      width: "auto",
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
   },
-  searchContainer: {
-    padding: "2px 4px",
-    display: "flex",
+  inputRoot: {
+    color: "inherit",
   },
-  input: {
-    marginLeft: theme.spacing(1),
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
   },
-  iconButton: {
-    padding: 10,
-  },
+  cancel: {},
 }));
 
-export default function SearchBar() {
+export default function Searchbar() {
   const classes = useStyles();
-
   return (
-    <Grid container justify="space-between" alignItems="center">
-      <Paper component="form" className={classes.searchContainer}>
-        <InputBase
-          className={classes.input}
-          placeholder="Search podcasts"
-          inputProps={{ "aria-label": "search podcasts" }}
-          fullWidth
-        />
-        <IconButton
-          type="submit"
-          className={classes.iconButton}
-          aria-label="search"
-        >
+    <Grid container>
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
           <SearchIcon />
+        </div>
+        <InputBase
+          placeholder="Search…"
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          inputProps={{ "aria-label": "search" }}
+        />
+        <IconButton className={classes.cancel}>
+          <CancelIcon color="secondary" />
         </IconButton>
-      </Paper>
-      <Button>Cancel</Button>
+      </div>
     </Grid>
   );
 }

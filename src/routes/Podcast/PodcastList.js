@@ -58,7 +58,6 @@ export default function PodcastList({ podcasts }) {
     }
   };
 
-  console.log("podcasts", podcasts);
   return (
           <List>
             {podcasts &&

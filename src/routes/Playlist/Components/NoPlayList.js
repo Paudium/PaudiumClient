@@ -8,6 +8,9 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   noListContainer: {
     height: "calc(100vh - 100px);",
+    width:"70%",
+    marginLeft:"auto",
+    marginRight:"auto",
   },
 }));
 
@@ -29,13 +32,14 @@ export default function NoPlayList() {
       <Box mt={4} mb={6}>
         <Typography color="secondary" gutterBottom align="center">
           You have'nt added episodes
-          <br /> or podcasts.
+         or podcasts.
         </Typography>
       </Box>
 
       <Button
-        variant="outlined"
-        color="secondary"
+        variant="contained"
+        color="primary"
+        fullWidth
         onClick={() => {
           history.push("/explore");
         }}

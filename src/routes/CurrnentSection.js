@@ -23,14 +23,15 @@ import Explore from "./Explore/Explor";
 import Search from "./Search/Search";
 import Profile from "./Profile/Profile";
 import ecommerce from "./Ecommerce/Ecommerce";
-
-
+import ecwid from "./Ecommerce/Ecommerce";
+import Spring from '../components/MediaPlayer/Components/Spring';
 
 import NavBar from "../components/NavBar/MediaTopBar/index";
 import BottomNavigation from "../components/BottomNavigation/BottomNavBar";
 
 import Test from "../routes/test";
-import Chapter from '../routes/Episoid/Components/Chapter'
+import Chapter from "../routes/Episoid/Components/Chapter";
+import Ecwid from "./Ecommerce/Ecwid";
 
 const Login = lazy(() => import("./Login/Login"));
 const Register = lazy(() => import("./Register"));
@@ -59,28 +60,31 @@ const circularLoader = (
 );
 
 const CurrentSection = ({ history, location }) => {
-  console.log("location", location);
   return (
     <div>
       <Suspense fallback={circularLoader}>
-        <NavBar />
+        {!(location.pathname.match(/search/) || <NavBar />)}
+
         <Container maxWidth="sm">
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/episode/:episodeId" component={Episode} />
             <Route exact path="/chapters/:episodeId" component={Chapters} />
-            <Route exact path = "/chapter" component = {Chapter}/>
+            <Route exact path="/chapter" component={Chapter} />
             <Route exact path="/episodes" component={Episodes} />
             <Route exact path="/podcast" component={Podcast} />
+            <Route exact path="/spring" component={Spring} />
 
             <Route exact path="/test" component={Test} />
-            <Route exact path="/playlist" component={PlayList} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/explore" component={Explore} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Register} />
             <Route exact path="/ecommerce" component={ecommerce} />
+            <Route exact path="/ecwid" component={Ecwid} />
+            <Route exact path="/playlist" component={PlayList} />
+            <Route path="/" render={() => <div>404 page</div>} />
           </Switch>
           {(location.pathname.match(/episode/) ||
             location.pathname.match(/podcast/) ||
@@ -90,7 +94,7 @@ const CurrentSection = ({ history, location }) => {
             <Route path="/" render={(props) => returnMainPlayer(props)} />
           )}
 
-          {(location.pathname==="/" ||
+          {(location.pathname === "/" ||
             location.pathname.match(/profile/) ||
             location.pathname.match(/playlist/) ||
             location.pathname.match(/search/) ||

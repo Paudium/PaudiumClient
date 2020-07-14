@@ -52,8 +52,8 @@ export default function Chapters({ match }) {
             </Grid>
           </Grid>
           <Grid container>
-            {chapters&&chapters.getPodcast.chapters.map((item) => (
-              <Chapter />
+            {chapters&&chapters.getPodcast.chapters.map((chapter) => (
+              <Chapter chapter = {chapter} />
             ))}
           </Grid>
         </Grid>

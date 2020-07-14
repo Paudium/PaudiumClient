@@ -3,9 +3,18 @@ import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { queryByText } from "@testing-library/react";
 
 let theme = createMuiTheme({
+  props:{
+    MuiButtonBase:{
+      disableRipple:true,
+    },
+    MuiAppBar:{
+      color:"transparent",
+    },
+
+  },
   palette: {
     primary: {
-      main: "#1D2C56",
+      main: "#1E61B9",
       contrastText:"#FFF"
     },
     inherit: {
@@ -31,6 +40,8 @@ let theme = createMuiTheme({
       },
     },
 
+    
+
     MuiListItemText: {
       primary: {
         color: "#FFF",
@@ -40,12 +51,13 @@ let theme = createMuiTheme({
       },
     },
 
-    MuiButton: {
-      root: {
-        borderRadius: "none",
-        height:"46px",
+    MuiButton:{
+      root:{
+        height:"56px",
       },
+      
     },
+
     MuiTabPanel: {
       root: {
         padding: 0,

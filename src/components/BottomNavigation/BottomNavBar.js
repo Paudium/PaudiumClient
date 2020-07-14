@@ -34,7 +34,7 @@ export default function BottomNavBar() {
       value={value}
       onChange={handleChange}
       className={classes.root}
-      showLabel = {true}
+      showLabels = {true}
     >
       <BottomNavigationAction
         label="Playlist"

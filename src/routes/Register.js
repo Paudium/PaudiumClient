@@ -71,11 +71,9 @@ export default function SignUp() {
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, result) {
-      console.log(result);
       history.push('/podcast');
     },
     onError(err) {
-      console.log(err.graphQLErrors[0].extensions.exception.errors);
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     variables: values,
@@ -89,7 +87,6 @@ export default function SignUp() {
   const onChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
-  console.log(values);
 
   return (
     <Container component="main" maxWidth="xs">

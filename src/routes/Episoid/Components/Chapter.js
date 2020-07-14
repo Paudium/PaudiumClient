@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid, Typography, IconButton } from "@material-ui/core";
 import NoteIcon from "../../../components/MediaPlayer/Components/Icons/EditIcon";
-import PlayStopIcon from "@material-ui/icons/PlayCircleFilled";
 import PlayStopButton from "../../../components/MediaPlayer/Components/PlayStopButton";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
