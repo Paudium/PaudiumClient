@@ -18,11 +18,11 @@ let theme = createMuiTheme({
       contrastText:"#FFF"
     },
     inherit: {
-      main: "#000",
+      main: "#FFF",
     },
     secondary: {
       main: "#FFF",
-      contrastText:"#000"
+      contrastText:"#FFF",
     },
     background: {
       default: "#1D2C56",

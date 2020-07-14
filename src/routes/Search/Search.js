@@ -6,7 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 export default function Search() {
   return (
     <div>
-      <AppBar>
+      <AppBar elevation = {1}>
         <Toolbar>
           <SearchBar />
         </Toolbar>

@@ -6,6 +6,8 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import {makeStyles} from '@material-ui/core/styles';
+
 
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -24,7 +26,7 @@ import Search from "./Search/Search";
 import Profile from "./Profile/Profile";
 import ecommerce from "./Ecommerce/Ecommerce";
 import ecwid from "./Ecommerce/Ecommerce";
-import Spring from '../components/MediaPlayer/Components/Spring';
+import Spring from "../components/MediaPlayer/Components/Spring";
 
 import NavBar from "../components/NavBar/MediaTopBar/index";
 import BottomNavigation from "../components/BottomNavigation/BottomNavBar";
@@ -36,6 +38,12 @@ import Ecwid from "./Ecommerce/Ecwid";
 const Login = lazy(() => import("./Login/Login"));
 const Register = lazy(() => import("./Register"));
 const HomePage = lazy(() => import("./Home"));
+
+const useStyles = makeStyles((theme)=>({
+  container:{
+    color:"#FFF",
+  }
+}))
 
 const returnMainPlayer = (props) => {
   // we will return the main player if the path is not the "/"
@@ -60,12 +68,14 @@ const circularLoader = (
 );
 
 const CurrentSection = ({ history, location }) => {
+
+  const classes = useStyles();
   return (
     <div>
       <Suspense fallback={circularLoader}>
-        {!(location.pathname.match(/search/) || <NavBar />)}
+        {!(location.pathname.match(/search/) && <NavBar />)}
 
-        <Container maxWidth="sm">
+        <Container maxWidth="sm" className = {classes.container}>
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/episode/:episodeId" component={Episode} />

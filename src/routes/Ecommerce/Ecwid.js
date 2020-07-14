@@ -7,17 +7,17 @@ import { Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import { useHistory } from "react-router-dom";
+import { ReactComponent as ShoppingBagIcon } from "./shopping_bag.svg";
 
 const useStyles = makeStyles((theme) => ({
   title: {
     display: "flex",
     flexGrow: 1,
     color: "#FFF",
-    
+    alignItems: "center",
+    width: "100vw",
   },
-  appbar: {
-    marginBottom: 20,
-  },
+  appbar: {},
 }));
 function Ecwid() {
   const storeDiv = useRef(null);
@@ -60,13 +60,11 @@ function Ecwid() {
     if (!scriptRef.current) {
       storeDiv.current.appendChild(script);
     }
-
     window.init();
   });
-  console.log("TEST", test);
   return (
     <div>
-      <AppBar className={classes.appbar}>
+      <AppBar position="static" className={classes.appbar} elevation={1}>
         <Toolbar>
           <div className={classes.title}>
             <IconButton onClick={() => history.goBack()} color="secondary">
@@ -74,15 +72,25 @@ function Ecwid() {
             </IconButton>
             <Typography variant="h5">Shopping</Typography>
           </div>
-          <div data-icon="BAG MEDIUM_ICON_COUNTER	" className="ec-cart-widget"></div>
+          <div
+            data-layout="COUNTER_ONLY"
+            data-icon="BAG"
+            className="ec-cart-widget"
+          ></div>
+          <ShoppingBagIcon />
         </Toolbar>
       </AppBar>
 
-      <Box my={7}>
+      <Box mt={3} mb={6}>
         <div id="my-search-32329017"></div>
-        <div id="my-categories-32329017"></div>
-        <div id="my-store-32329017" ref={storeDiv}></div>
       </Box>
+      {/* <Typography variant="h5" color="secondary">
+        Product
+      </Typography> */}
+      <Box mt={3}>
+        <div id="my-categories-32329017"></div>
+      </Box>
+      <div id="my-store-32329017" ref={storeDiv}></div>
     </div>
   );
 }
