@@ -7,8 +7,6 @@ import {
   Route,
 } from "react-router-dom";
 import {makeStyles} from '@material-ui/core/styles';
-
-
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -26,11 +24,11 @@ import Search from "./Search/Search";
 import Profile from "./Profile/Profile";
 import ecommerce from "./Ecommerce/Ecommerce";
 import ecwid from "./Ecommerce/Ecommerce";
-import Spring from "../components/MediaPlayer/Components/Spring";
+import EcwidNav from './Ecommerce/EcwidHeader'
+import Spring from "../components/MediaPlayer";
 
 import NavBar from "../components/NavBar/MediaTopBar/index";
 import BottomNavigation from "../components/BottomNavigation/BottomNavBar";
-
 import Test from "../routes/test";
 import Chapter from "../routes/Episoid/Components/Chapter";
 import Ecwid from "./Ecommerce/Ecwid";
@@ -55,7 +53,6 @@ const returnMainPlayer = (props) => {
   }
 };
 
-const episodePath = "/episode";
 const circularLoader = (
   <Grid
     style={{ height: "100vh" }}
@@ -74,6 +71,7 @@ const CurrentSection = ({ history, location }) => {
     <div>
       <Suspense fallback={circularLoader}>
         {!(location.pathname.match(/search/) && <NavBar />)}
+        {(location.pathname.match(/ecwid/) && <EcwidNav/>)}
 
         <Container maxWidth="sm" className = {classes.container}>
           <Switch>
@@ -83,7 +81,6 @@ const CurrentSection = ({ history, location }) => {
             <Route exact path="/chapter" component={Chapter} />
             <Route exact path="/episodes" component={Episodes} />
             <Route exact path="/podcast" component={Podcast} />
-            <Route exact path="/spring" component={Spring} />
 
             <Route exact path="/test" component={Test} />
             <Route exact path="/search" component={Search} />

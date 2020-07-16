@@ -32,7 +32,6 @@ export default function Home() {
           ) : (
             <Button
               variant="contained"
-              color="secondary"
               onClick={() => history.push("/podcast")}
             >
               Go to podcast

@@ -59,41 +59,41 @@ export default function PodcastList({ podcasts }) {
   };
 
   return (
-          <List>
-            {podcasts &&
-              podcasts.map((podcast) => (
-                <ListItem
-                  key={podcast.id}
-                  disableGutters
-                  divider={true}
-                  button
-                  onClick={() => playSelectedItem(podcast)}
-                >
-                  <ListItemAvatar>
-                    <Avatar
-                      variant="rounded"
-                      className={classes.large}
-                      src={podcast.imageURL}
-                    ></Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={podcast.title}
-                    secondary={"secondary text"}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton
-                      edge="end"
-                      aria-label="play-stop"
-                      onClick={() => handlePlayer(podcast)}
-                    >
-                      <PlayCircleFilledIcon
-                        className={classes.playButton}
-                        fontSize="large"
-                      />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              ))}
-          </List>
+    <List>
+      {podcasts &&
+        podcasts.map((podcast) => (
+          <ListItem
+            key={podcast.id}
+            disableGutters
+            divider={true}
+            button
+            onClick={() => playSelectedItem(podcast)}
+          >
+            <ListItemAvatar>
+              <Avatar
+                variant="rounded"
+                className={classes.large}
+                src={podcast.imageURL}
+              ></Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary={podcast.title}
+              secondary={"secondary text"}
+            />
+            <ListItemSecondaryAction>
+              <IconButton
+                edge="end"
+                aria-label="play-stop"
+                onClick={() => handlePlayer(podcast)}
+              >
+                <PlayCircleFilledIcon
+                  className={classes.playButton}
+                  fontSize="large"
+                />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        ))}
+    </List>
   );
 }

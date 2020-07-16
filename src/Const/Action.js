@@ -1,1 +1,1 @@
-export const ACTION =  {setPodcast:"setCurrentPodcast", setPlayerState:"setPlayerState"};
+export const ACTION =  {setPodcast:"setCurrentPodcast", setPlayerState:"setPlayerState",setPlayerSize:"setPlayerSize",};

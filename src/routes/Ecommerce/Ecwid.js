@@ -3,27 +3,23 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import { Typography } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+
 import { useHistory } from "react-router-dom";
-import { ReactComponent as ShoppingBagIcon } from "./shopping_bag.svg";
+
+import EcwidHeader from './EcwidHeader';
+
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    display: "flex",
-    flexGrow: 1,
-    color: "#FFF",
-    alignItems: "center",
-    width: "100vw",
-  },
+ 
   appbar: {},
 }));
-function Ecwid() {
+function Ecwid({match}) {
   const storeDiv = useRef(null);
   const scriptRef = useRef(null);
   const classes = useStyles();
   const history = useHistory();
+
+  console.log("Ecommerce match",match)
 
   window.localStorage.setItem("show_ecwid_logs", "true");
   window.ecwid_script_defer = true;
@@ -34,17 +30,17 @@ function Ecwid() {
   window._xnext_initialization_scripts = [
     {
       widgetType: "ProductBrowser",
-      id: "my-store-32329017",
+      id: "my-store-33129315",
       arg: ["id=productBrowser", "views=grid(20,3)"],
     },
     {
       widgetType: "CategoriesV2",
-      id: "my-categories-32329017",
+      id: "my-categories-33129315",
       arg: ["id=categoriesV2"],
     },
     {
       widgetType: "SearchWidget",
-      id: "my-search-32329017",
+      id: "my-search-33129315",
       arg: ["id=searchWidget"],
     },
   ];
@@ -52,7 +48,7 @@ function Ecwid() {
   var script = document.createElement("script");
   script.charset = "utf-8";
   script.type = "text/javascript";
-  script.src = "https://app.ecwid.com/script.js?32329017";
+  script.src = "https://app.ecwid.com/script.js?33129315";
   script.defer = true;
   script.ref = scriptRef;
 
@@ -64,33 +60,16 @@ function Ecwid() {
   });
   return (
     <div>
-      <AppBar position="static" className={classes.appbar} elevation={1}>
-        <Toolbar>
-          <div className={classes.title}>
-            <IconButton onClick={() => history.goBack()} color="secondary">
-              <KeyboardBackspaceIcon />
-            </IconButton>
-            <Typography variant="h5">Shopping</Typography>
-          </div>
-          <div
-            data-layout="COUNTER_ONLY"
-            data-icon="BAG"
-            className="ec-cart-widget"
-          ></div>
-          <ShoppingBagIcon />
-        </Toolbar>
-      </AppBar>
-
       <Box mt={3} mb={6}>
-        <div id="my-search-32329017"></div>
+        <div id="my-search-33129315"></div>
       </Box>
       {/* <Typography variant="h5" color="secondary">
         Product
       </Typography> */}
       <Box mt={3}>
-        <div id="my-categories-32329017"></div>
+        <div id="my-categories-33129315"></div>
       </Box>
-      <div id="my-store-32329017" ref={storeDiv}></div>
+      <div id="my-store-33129315" ref={storeDiv}></div>
     </div>
   );
 }
