@@ -4,8 +4,8 @@ import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import CancelIcon from "@material-ui/icons/Cancel";
-import Grid from '@material-ui/core/Grid';
-
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -51,23 +51,29 @@ const useStyles = makeStyles((theme) => ({
 export default function Searchbar() {
   const classes = useStyles();
   return (
-    <Grid container>
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
+    <Grid container justify="space-between" alignItems="center">
+      <Grid item xs={9}>
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ "aria-label": "search" }}
+          />
+          {/* <IconButton edge="end" className={classes.cancel}>
+            <CancelIcon color="secondary" />
+          </IconButton> */}
         </div>
-        <InputBase
-          placeholder="Search…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          inputProps={{ "aria-label": "search" }}
-        />
-        <IconButton className={classes.cancel}>
-          <CancelIcon color="secondary" />
-        </IconButton>
-      </div>
+      </Grid>
+
+      <Grid item>
+        <Button color="secondary">Cancel</Button>
+      </Grid>
     </Grid>
   );
 }

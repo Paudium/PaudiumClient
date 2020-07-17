@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginBottom: 33,
   },
+  imageWrapper:{
+    borderRadius:4,
+  }
 }));
 
 const AntTabs = withStyles({
@@ -101,7 +104,7 @@ export default function Podcasts() {
         >
           <Grid item xs={5}>
             {console.log(dataPod && dataPod)}
-            <Paper elevation={3}>
+            <Paper elevation={3} className = {classes.imageWrapper}>
               <img
                 src={dataPod && dataPod.podcasts[0].imageURL}
                 width="100%"

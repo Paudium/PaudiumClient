@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import { Grid, Box } from "@material-ui/core";
+import { findDangerousChanges } from "graphql";
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -32,8 +33,10 @@ export default function TimeLine({ audioState, player }) {
   }, [audioState, player]);
 
   const handleChange = (event, newValue) => {
-    player.currentTime = newValue;
-    setCurrentTime(newValue);
+    if (player) {
+      player.currentTime = newValue;
+      setCurrentTime(newValue);
+    }
   };
 
   const formatTime = (secs) => {
@@ -50,7 +53,7 @@ export default function TimeLine({ audioState, player }) {
       if (player.duration) {
         return formatTime(player.duration);
       } else {
-        return "0:00";
+        return "00:00";
       }
     } else {
       return 0;
@@ -70,7 +73,7 @@ export default function TimeLine({ audioState, player }) {
             02:35
           </Typography>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <Box mx={1}>
             <Slider
               value={currentTime}

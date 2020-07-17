@@ -11,6 +11,9 @@ import TimeLine from "./Components/TimeLine";
 import Content from "./Components/ContentItem";
 import PlayStopIcon from "./Components/Icons/Stop";
 import Typography from "@material-ui/core/Typography";
+import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
+import PlayCircleFilledWhiteIcon from "@material-ui/icons/PlayCircleFilledWhite";
+import NoteIcon from "../../components/MediaPlayer/Components/Icons/NoteIcon";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Grid, IconButton, Box, Icon, Avatar } from "@material-ui/core";
@@ -26,22 +29,23 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    minHeight: "100vh",
+    minHeight: "100vw",
     overflow: "hidden",
   },
   maxContainer: {
     width: "100vw",
-    marginLeft:"auto",
-    
+    pauuuuddingLeft: "8px",
+    paddingRight: "8px",
+    marginLeft: "auto",
+
   },
-  playStopButton: {
-    width: "60px",
-    height: "60px",
-  },
+  playStopButton: {},
   toolContainer: {
     border: "1px solid rgba(29,44,86,0.3) ",
-    borderRadius: 8,
+    borderRadius: 16,
     marginBottom: "20px",
+    marginTop:21,
+
   },
   iconButton: {
     height: "35px",
@@ -49,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "4px",
     backgroundColor: "rgb(31, 39, 71,0.1)",
     padding: 6,
+  },
+  pause: {
+    height: 60,
+    width: 60,
   },
 }));
 
@@ -72,20 +80,20 @@ export default function MaxPlayer() {
 
   return (
     <div>
-      <Paper className={classes.maxContainer}>
+      <Paper className={classes.maxContainer} elevation={0}>
         <Grid container>
           <Grid item xs={12}>
-            <Box px={2} className={classes.toolContainer}>
+            <Box px={2} py={1} className={classes.toolContainer}>
               <Grid
                 container
                 direction="row"
-                justify="space-between"
+                justify="space-around"
                 alignItems="center"
+
               >
                 <Like color="primary" />
                 <Dislike color="secondary" />
-                <BookMarkIcon />
-                <Pencil />
+                <NoteIcon />
               </Grid>
             </Box>
           </Grid>
@@ -105,16 +113,24 @@ export default function MaxPlayer() {
               justify="space-evenly"
               alignItems="center"
             >
-              <BackButton color="primary" />
-              <BackDisp />
+              <BackButton />
+              <IconButton>
+                <BackDisp />
+              </IconButton>
               <IconButton
                 onClick={handleToggle}
-                className={classes.playStopButton}
+                className={classes.playpauseButton}
               >
-                <PlayStopIcon />
+                {currentPlayStatus === MEDIA.PLAY ? (
+                  <PauseCircleFilledIcon className={classes.pause} />
+                ) : (
+                  <PlayCircleFilledWhiteIcon className={classes.pause} />
+                )}
               </IconButton>
-              <ForwardDisp />
-              <ForwardButton color="primary" />
+              <IconButton>
+                <ForwardDisp />
+              </IconButton>
+              <ForwardButton />
             </Grid>
           </Grid>
         </Grid>

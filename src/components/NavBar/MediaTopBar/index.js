@@ -38,8 +38,8 @@ export default function NavBar() {
         <IconButton
           edge="start"
           className={classes.menuButton}
-          color="inherit"
           aria-label="menu"
+          color = "secondary"
           onClick={() => history.goBack()}
         >
           <KeyboardBackspaceIcon />

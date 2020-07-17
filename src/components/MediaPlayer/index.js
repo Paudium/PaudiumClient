@@ -13,7 +13,7 @@ import MaxPlayer from "./MaxPlayer";
 
 import "./styles.css";
 
-const height = 300;
+const height = 110;
 const useStyles = makeStyles((theme) => ({
   container: {
     zIndex: 1000,
@@ -59,14 +59,13 @@ export default function App() {
         style={{ display: "block", bottom: `calc(-100vh + ${height}px)`, y }}
       >
         <div className={classes.container}>
-          {/* {console.log(currentPlayerSize)}
+          {console.log(currentPlayerSize)}
           {currentPlayerSize === PLAYER_SIZE.MAXIMIZE ? (
             <MaxPlayer />
           ) : (
             <MiniPlayer />
-          )} */}
+          )}
           <MediaPlayer />
-          <MiniPlayer />
         </div>
       </a.div>
     </>

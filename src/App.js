@@ -9,8 +9,8 @@ import { AuthProvider } from "./GlobalState/AuthContext";
 import CurrentSection from "./routes/CurrnentSection";
 
 const client = new ApolloClient({
-  uri: "http://localhost:5000/",
-  // uri: "https://obscure-earth-08296.herokuapp.com",
+  // uri: "http://localhost:5000/",
+  uri: "https://obscure-earth-08296.herokuapp.com",
 });
 
 function App() {
