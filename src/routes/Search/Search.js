@@ -1,26 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import SearchBar from "./Component/SearchBar";
 import { AppBar } from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
 import SearchItemList from "./Component/SearchListItem";
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { GlobalContext } from "../../GlobalState/GlobalState";
 
-const useStyles = makeStyles((theme)=>({
-  listContainer:{
-    marginTop:50,
-  }
-}))
-
-const searchData = [
-  {
-    imageURL:
-      "https://ssl-static.libsyn.com/p/assets/3/4/e/5/34e59b7e81947180/ASP_albumart_2c.png",
-    title: "This is test title for search",
+const useStyles = makeStyles((theme) => ({
+  listContainer: {
+    marginTop: 50,
   },
-];
+}));
 
 export default function Search() {
+  const [{ currentSearchKeyWords }] = useContext(GlobalContext);
   const classes = useStyles();
+  const {
+    loading: loadingSearchItem,
+    error: errorSearch,
+    data: SearchResult,
+  } = useQuery(GET_SEARCH_ITEM, {
+    variables: { currentSearchKeyWords },
+  });
+
   return (
     <div>
       <AppBar elevation={1}>
@@ -28,11 +32,26 @@ export default function Search() {
           <SearchBar />
         </Toolbar>
       </AppBar>
-      <div className = {classes.listContainer}>
-        {searchData.map((item) => (
-          <SearchItemList podcast={item} />
-        ))}
+      <div className={classes.listContainer}>
+        {SearchResult &&
+          SearchResult.searchPodTitle.map((item) => (
+            <SearchItemList
+              id={item.id}
+              image={item.podImage}
+              title={item.podTitle}
+            />
+          ))}
       </div>
     </div>
   );
 }
+
+const GET_SEARCH_ITEM = gql`
+  query($currentSearchKeyWords: String!) {
+    searchPodTitle(text: $currentSearchKeyWords) {
+      id
+      podTitle
+      podImage
+    }
+  }
+`;

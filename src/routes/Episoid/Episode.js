@@ -29,15 +29,15 @@ export default function Episode({ match }) {
     }
   );
 
-  console.log("Query result", episode&&episode.getPodcast.title);
+  console.log("Query result", episode && episode.getPodcast.title);
 
   return (
     <div className={classes.root}>
       <CardMedia
         component="img"
-        alt={episode&&episode.getPodcast.title}
-        image={episode&&episode.getPodcast.imageURL}
-        title={episode&&episode.getPodcast.title}
+        alt={episode && episode.getPodcast.title}
+        image={episode && episode.getPodcast.imageURL}
+        title={episode && episode.getPodcast.title}
       />
       <CardContent>
         <Typography
@@ -47,10 +47,10 @@ export default function Episode({ match }) {
           color="secondary"
           align="center"
         >
-          {episode&&episode.getPodcast.title}
+          {episode && episode.getPodcast.title}
         </Typography>
-        <Typography variant = "body1" color = "secondary">
-        {episode&&episode.getPodcast.description}
+        <Typography variant="body1" color="secondary">
+          {episode && episode.getPodcast.description}
         </Typography>
       </CardContent>
     </div>

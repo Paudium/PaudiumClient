@@ -3,7 +3,7 @@ import { useSpring, a, config } from "react-spring";
 import { useDrag } from "react-use-gesture";
 import MediaPlayer from "./Player";
 import { GlobalContext } from "../../GlobalState/GlobalState";
-import { MEDIA } from "../../Const/MediaState";
+import { MEDIA } from "../../Const/Consts";
 import { ACTION } from "../../Const/Action";
 import { PLAYER_SIZE } from "../../Const/PlayerSize";
 import { Typography } from "@material-ui/core";

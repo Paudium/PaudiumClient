@@ -12,7 +12,7 @@ import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../../GlobalState/GlobalState";
 import { ACTION } from "../../Const/Action";
-import { MEDIA } from "../../Const/MediaState";
+import { MEDIA } from "../../Const/Consts";
 import { AudioContext } from "../../GlobalState/AudioContext";
 
 const useStyles = makeStyles((theme) => ({

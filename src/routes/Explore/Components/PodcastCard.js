@@ -35,7 +35,7 @@ export default function MediaCard({ id, image, title }) {
           image={image ? image : NoImage}
           title={title}
           onClick={() => {
-            history.push(`/exploreDetail/${id}`);
+            history.push(`/podgroup/${id}`);
           }}
           src = {NoImage}
         />
@@ -55,19 +55,3 @@ export default function MediaCard({ id, image, title }) {
   );
 }
 
-{
-  /* <Grid container direction="column">
-      <Grid item className={classes.media}>
-        <ButtonBase>
-          {image ? (
-            <img src={image} alt="" />
-          ) : (
-            <img src={NoImage} alt="No Image" />
-          )}
-        </ButtonBase>
-      </Grid>
-      <Grid item zeroMinWidth>
-        <Typography noWrap>{title}</Typography>
-      </Grid>
-    </Grid> */
-}

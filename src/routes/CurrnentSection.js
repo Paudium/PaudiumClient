@@ -1,21 +1,17 @@
 import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
-
 import {
   BrowserRouter as Router,
   withRouter,
   Switch,
   Route,
 } from "react-router-dom";
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-import { GlobalContext } from "../GlobalState/GlobalState";
-
 import { Container } from "@material-ui/core";
 import MainPlayer from "../routes/Player";
 import Episode from "../routes/Episoid/Episode";
-import Podcast from "./Podcast/Podcasts";
+import PodGroup from "./Podcast/PodGroup";
 import Episodes from "./Episodes";
 import Chapters from "./Episoid/Chapters";
 import PlayList from "./Playlist/Playlist";
@@ -25,7 +21,7 @@ import Search from "./Search/Search";
 import Profile from "./Profile/Profile";
 import ecommerce from "./Ecommerce/Ecommerce";
 import ecwid from "./Ecommerce/Ecommerce";
-import EcwidNav from './Ecommerce/EcwidHeader'
+import EcwidNav from "./Ecommerce/EcwidHeader";
 import Spring from "../components/MediaPlayer";
 
 import NavBar from "../components/NavBar/MediaTopBar/index";
@@ -38,11 +34,11 @@ const Login = lazy(() => import("./Login/Login"));
 const Register = lazy(() => import("./Register"));
 const HomePage = lazy(() => import("./Home"));
 
-const useStyles = makeStyles((theme)=>({
-  container:{
-    color:"#FFF",
-  }
-}))
+const useStyles = makeStyles((theme) => ({
+  container: {
+    color: "#FFF",
+  },
+}));
 
 const returnMainPlayer = (props) => {
   // we will return the main player if the path is not the "/"
@@ -67,39 +63,42 @@ const circularLoader = (
 );
 
 const CurrentSection = ({ history, location }) => {
-
   const classes = useStyles();
   return (
     <div>
       <Suspense fallback={circularLoader}>
         {/* <NavBar/> */}
-        {(!(location.pathname.match(/search/)) && <NavBar />)}
-        {(location.pathname.match(/ecwid/) && <EcwidNav/>)}
+        {!location.pathname.match(/search/) && <NavBar />}
+        {location.pathname.match(/ecwid/) && <EcwidNav />}
 
-        <Container maxWidth="sm" className = {classes.container}>
+        <Container maxWidth="sm" className={classes.container}>
           <Switch>
-            <Route exact path="/" component={HomePage} />
+            <Route exact path="/" component={PlayList} />
             <Route exact path="/episode/:episodeId" component={Episode} />
             <Route exact path="/chapters/:episodeId" component={Chapters} />
             <Route exact path="/chapter" component={Chapter} />
             <Route exact path="/episodes" component={Episodes} />
-            <Route exact path="/podcast" component={Podcast} />
+            <Route exact path="/podgroup/:id" component={PodGroup} />
             <Route exact path="/spring" component={Spring} />
 
             <Route exact path="/test" component={Test} />
             <Route exact path="/search" component={Search} />
             <Route exact path="/explore" component={Explore} />
-            <Route exact path="/exploreDetail/:podGroupId" component={ExploreDetail} />
+            <Route
+              exact
+              path="/exploreDetail/:podGroupId"
+              component={ExploreDetail}
+            />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Register} />
             <Route exact path="/ecommerce" component={ecommerce} />
             <Route exact path="/ecwid" component={Ecwid} />
-            <Route exact path="/playlist" component={PlayList} />
+            {/* <Route exact path="/playlist" component={PlayList} /> */}
             <Route path="/" render={() => <div>404 page</div>} />
           </Switch>
           {(location.pathname.match(/episode/) ||
-            location.pathname.match(/podcast/) ||
+            location.pathname.match(/podgroup/) ||
             location.pathname.match(/chapters/) ||
             location.pathname.match(/ecommerce/) ||
             location.pathname.match(/episodes/)) && (

@@ -1,5 +1,5 @@
 import React, { useReducer, createContext } from "react";
-import { MEDIA } from "../Const/MediaState";
+import { MEDIA } from "../Const/Consts";
 import { ACTION } from "../Const/Action";
 import { PLAYER_SIZE } from "../Const/PlayerSize";
 import gql from "graphql-tag";
@@ -13,6 +13,7 @@ const initialState = {
   currentPodcast: {},
   currentPlayStatus: false,
   currentPlayerSize: PLAYER_SIZE.MAXIMIZE,
+  currentSearchKeyWords:"",
 };
 
 const reducer = (state, action) => {
@@ -31,6 +32,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         currentPlayerSize: action.snippet,
+      };
+      case ACTION.setSearchKeys:
+      return {
+        ...state,
+        currentSearchKeyWords: action.snippet,
       };
   }
 };

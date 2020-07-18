@@ -14,7 +14,7 @@ import NoteIcon from "../../components/MediaPlayer/Components/Icons/NoteIcon";
 import { GlobalContext } from "../../GlobalState/GlobalState";
 import { AudioContext } from "../../GlobalState/AudioContext";
 import { ACTION } from "../../Const/Action";
-import { MEDIA } from "../../Const/MediaState";
+import { MEDIA } from "../../Const/Consts";
 import { PLAYER_SIZE } from "../../Const/PlayerSize";
 
 import EditIcon from "./Components/Icons/EditIcon";

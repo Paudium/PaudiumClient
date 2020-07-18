@@ -49,7 +49,7 @@ export default function Login() {
     update(_, {data:{login:userData}}) {
       console.log(userData);
       contextAuth.login(userData);
-      history.push("/podcast");
+      history.push("/podlist");
     },
     onError(err) {
       console.log(err.graphQLErrors[0].extensions.exception.errors);

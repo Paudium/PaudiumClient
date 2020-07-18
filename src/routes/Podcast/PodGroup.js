@@ -31,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginBottom: 33,
   },
-  imageWrapper:{
-    borderRadius:4,
-  }
+  imageWrapper: {
+    borderRadius: 4,
+  },
 }));
 
 const AntTabs = withStyles({
@@ -79,13 +79,22 @@ const AntTab = withStyles((theme) => ({
   selected: {},
 }))((props) => <Tab disableRipple {...props} />);
 
-export default function Podcasts() {
-  const { loading: loadingPod, error: errorPod, data: dataPod } = useQuery(
-    GET_PODCAST
-  );
+export default function PodGroup({ match }) {
+  console.log("Podgroup match", match);
+  const id = match.params.id;
+  console.log(id);
+  const {
+    loading,
+    error,
+    // data: dataPod,
+    data,
+  } = useQuery(GET_PODGROUP, { variables: {id} });
+
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
+  const dataPod = data&&data.podgroup;
+
 
   console.log("dataPod", dataPod);
   const handleChange = (event, newValue) => {
@@ -103,10 +112,9 @@ export default function Podcasts() {
           alignItems="flex-end"
         >
           <Grid item xs={5}>
-            {console.log(dataPod && dataPod)}
-            <Paper elevation={3} className = {classes.imageWrapper}>
+            <Paper elevation={3} className={classes.imageWrapper}>
               <img
-                src={dataPod && dataPod.podcasts[0].imageURL}
+                src={dataPod && dataPod.podImage}
                 width="100%"
                 alt="post"
               />
@@ -154,14 +162,18 @@ export default function Podcasts() {
   );
 }
 
-const GET_PODCAST = gql`
-  {
-    podcasts {
+const GET_PODGROUP = gql`
+  query($id: ID!) {
+    podgroup(podgroupId: $id) {
       id
-      title
-      imageURL
-      audioURL
       podTitle
+      podImage
+      podcasts {
+        id
+        imageURL
+        title
+        audioURL
+      }
     }
   }
 `;

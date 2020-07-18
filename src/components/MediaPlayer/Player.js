@@ -5,7 +5,7 @@ import { GlobalContext } from "../../GlobalState/GlobalState";
 import { AudioContext } from "../../GlobalState/AudioContext";
 import { AuthContext } from "../../GlobalState/AuthContext";
 import { ACTION } from "../../Const/Action";
-import { MEDIA } from "../../Const/MediaState";
+import { MEDIA } from "../../Const/Consts";
 
 let relatedVideosVar;
 

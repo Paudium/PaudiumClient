@@ -11,7 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 import { GlobalContext } from "../../GlobalState/GlobalState";
 import { ACTION } from "../../Const/Action";
-import { MEDIA } from "../../Const/MediaState";
+import { MEDIA } from "../../Const/Consts";
 import { AudioContext } from "../../GlobalState/AudioContext";
 import BookmarkIcon from "../../components/MediaPlayer/Components/Icons/BookmarkIconFilled";
 

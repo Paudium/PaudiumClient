@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
@@ -6,6 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import CancelIcon from "@material-ui/icons/Cancel";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import { GlobalContext } from "../../../GlobalState/GlobalState";
+import { ACTION } from "../../../Const/Action";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -49,7 +51,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Searchbar() {
+  const [{ currentSearchKeyWords }, dispatch] = useContext(GlobalContext);
   const classes = useStyles();
+  const handleSearchKeyWordChange = (value) => {
+    dispatch({ type: ACTION.setSearchKeys, snippet: value });
+  };
+
+  const handleSearchCancel = () => {
+    dispatch({ type: ACTION.setSearchKeys, snippet: "" });
+  };
   return (
     <Grid container justify="space-between" alignItems="center">
       <Grid item xs={9}>
@@ -64,15 +74,15 @@ export default function Searchbar() {
               input: classes.inputInput,
             }}
             inputProps={{ "aria-label": "search" }}
+            onChange={(e) => handleSearchKeyWordChange(e.target.value)}
+            value={currentSearchKeyWords}
           />
-          {/* <IconButton edge="end" className={classes.cancel}>
-            <CancelIcon color="secondary" />
-          </IconButton> */}
         </div>
       </Grid>
-
       <Grid item>
-        <Button color="secondary">Cancel</Button>
+        <Button color="secondary" onClick={handleSearchCancel}>
+          Cancel
+        </Button>
       </Grid>
     </Grid>
   );

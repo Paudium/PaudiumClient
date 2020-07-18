@@ -8,7 +8,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import BookmarkIcon from '../../../components/MediaPlayer/Components/Icons/BookmarkIcon'
+import BookmarkIcon from "../../../components/MediaPlayer/Components/Icons/BookmarkIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
   podcastList: {
     marginTop: 80,
   },
-
   rootList: {
     width: "100%",
     height: 400,
@@ -49,33 +48,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchListItem({ podcast }) {
+export default function SearchListItem({ id, title, image }) {
+  const history = useHistory();
   const classes = useStyles();
- 
+
+  const onSearchItem = (id) => {
+    history.push(`/podgroup/${id}`);
+  };
+
   return (
     <div>
       <ListItem
-        key={podcast.id}
+        key={id}
         disableGutters
         divider={true}
         button
         className={classes.listItem}
+        onClick={() => {
+          onSearchItem(id);
+        }}
         // style={style}
       >
         <ListItemAvatar>
           <Avatar
             variant="rounded"
             className={classes.large}
-            src={podcast.imageURL}
+            src={image}
           ></Avatar>
         </ListItemAvatar>
-        <ListItemText primary={podcast.title} secondary={"secondary text"} />
+        <ListItemText primary={title} secondary={"secondary text"} />
 
         <ListItemSecondaryAction>
-          <IconButton
-            edge="end"
-            aria-label="play-stop"
-          >
+          <IconButton edge="end" aria-label="play-stop">
             <BookmarkIcon className={classes.bookmarkButton} />
           </IconButton>
         </ListItemSecondaryAction>
