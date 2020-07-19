@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     marginBottom: 30,
-    marginTop:10,
+    marginTop: 10,
   },
   swiper: {
     marginTop: 20,
@@ -56,7 +56,13 @@ export default function Explore() {
         >
           {dataCategory.getCategories.map((category) => (
             <Grid item xs={12} sm={6}>
-              <Grid item xs = {12} container justify="space-between" direction="row">
+              <Grid
+                item
+                xs={12}
+                container
+                justify="space-between"
+                direction="row"
+              >
                 <Typography
                   className={classes.categoryPP}
                   color="secondary"
@@ -64,7 +70,11 @@ export default function Explore() {
                 >
                   {category}
                 </Typography>
-                <Link component={RouterLink} to = {`group/${category}`} className={classes.link}>
+                <Link
+                  component={RouterLink}
+                  to={`group/${category}`}
+                  className={classes.link}
+                >
                   <Typography variant="body1">See All</Typography>
                 </Link>
               </Grid>
