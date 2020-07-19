@@ -16,11 +16,10 @@ import Episodes from "./Episodes";
 import Chapters from "./Episoid/Chapters";
 import PlayList from "./Playlist/Playlist";
 import Explore from "./Explore/Explore";
-import ExploreDetail from "./Explore/Explore_Detail";
+import ExploreDetail from "./Explore/ExploreDetail";
 import Search from "./Search/Search";
 import Profile from "./Profile/Profile";
 import ecommerce from "./Ecommerce/Ecommerce";
-import ecwid from "./Ecommerce/Ecommerce";
 import EcwidNav from "./Ecommerce/EcwidHeader";
 import Spring from "../components/MediaPlayer";
 
@@ -86,7 +85,7 @@ const CurrentSection = ({ history, location }) => {
             <Route exact path="/explore" component={Explore} />
             <Route
               exact
-              path="/exploreDetail/:podGroupId"
+              path="/group/:category"
               component={ExploreDetail}
             />
             <Route exact path="/profile" component={Profile} />

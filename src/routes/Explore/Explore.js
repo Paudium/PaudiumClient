@@ -64,7 +64,7 @@ export default function Explore() {
                 >
                   {category}
                 </Typography>
-                <Link component={RouterLink} className={classes.link}>
+                <Link component={RouterLink} to = {`group/${category}`} className={classes.link}>
                   <Typography variant="body1">See All</Typography>
                 </Link>
               </Grid>

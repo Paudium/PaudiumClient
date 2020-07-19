@@ -60,30 +60,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GET_PODCAST = gql`
-  query($podgroupId: ID!) {
-    podgroup(podgroupId: $podgroupId) {
-      id
-      podTitle
-      podcasts {
-        id
-        title
-        imageURL
-      }
-    }
-  }
-`;
-
 export default function ExploreDetail({ match }) {
-  const podgroupId = match.params.podGroupId;
-  console.log(podgroupId);
-  const { loading: loadingPod, error: errorPod, data: dataPod } = useQuery(
-    GET_PODCAST,
-    {
-      variables: { podgroupId },
-    }
-  );
-  console.log(dataPod);
+  const category = match.params.category;
+  console.log("category", category);
+  const { loading, error, data } = useQuery(GET_PODGROUP, {
+    variables: { category },
+  });
+  console.log("pod cateogry datea", data);
+  const dataPod = data && data.getpodGroupByCategory;
+  console.log("pod cateogry datea", dataPod);
   const classes = useStyles();
   const history = useHistory();
   const [{ currentPodcast }, dispatch] = useContext(GlobalContext);
@@ -91,8 +76,7 @@ export default function ExploreDetail({ match }) {
   const audioRef = useContext(AudioContext);
 
   const playSelectedItem = (data) => {
-    history.push(`/episode/${data.id}`);
-    dispatch({ type: ACTION.setPodcast, snippet: data });
+    history.push(`/podgroup/${data.id}`);
   };
   const handlePlayer = (data) => {
     if (data.id !== currentPodcast.id || currentPlayStatus === MEDIA.PAUSE) {
@@ -102,30 +86,29 @@ export default function ExploreDetail({ match }) {
       audioRef.current.pause();
     }
   };
-  function renderRow(props) {
-    const { index, style } = props;
-    return (
-      <div>
-        {dataPod &&
-          dataPod.podgroup.podcasts.map((podcast) => (
+  
+
+  return (
+      <div className={classes.root}>
+         <div>
+         {dataPod &&dataPod.map((item) => (
             <ListItem
-              key={podcast.id}
+              key={item.id}
               disableGutters
               divider={true}
               button
-              onClick={() => playSelectedItem(podcast)}
+              onClick={() => playSelectedItem(item)}
               className={classes.listItem}
-              // style={style}
             >
               <ListItemAvatar>
                 <Avatar
                   variant="rounded"
                   className={classes.large}
-                  src={podcast.imageURL}
+                  src={item.podImage}
                 ></Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={podcast.title}
+                primary={item.podTitle}
                 secondary={"secondary text"}
               />
 
@@ -133,35 +116,24 @@ export default function ExploreDetail({ match }) {
                 <IconButton
                   edge="end"
                   aria-label="play-stop"
-                  onClick={() => handlePlayer(podcast)}
+                  onClick={() => handlePlayer(item)}
                 >
                   <BookmarkIcon className={classes.bookmarkButton} />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
           ))}
+        </div>
       </div>
-    );
-  }
-
-  return (
-    <div>
-      <div className={classes.root}>
-        {dataPod ? (
-          <FixedSizeList
-            height={1000}
-            width="100%"
-            itemSize={500}
-            itemCount={
-              dataPod.podgroup.podcasts && dataPod.podgroup.podcasts.length
-            }
-          >
-            {renderRow}
-          </FixedSizeList>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    </div>
   );
 }
+
+const GET_PODGROUP = gql`
+  query($category: String!) {
+    getpodGroupByCategory(category: $category) {
+      id
+    podTitle
+    podImage
+    }
+  }
+`;
