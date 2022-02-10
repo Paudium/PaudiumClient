@@ -17,7 +17,7 @@
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "node-id3": "^0.1.17",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
     "react-audio-player": "^0.13.0",
