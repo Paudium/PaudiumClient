@@ -30,7 +30,7 @@
     "react-use-gesture": "latest",
     "react-window": "^1.8.5",
     "request-promise": "^4.2.5",
-    "rss-parser": "^3.8.0",
+    "rss-parser": "^3.13.0",
     "swiper": "^6.0.1"
   },
   "scripts": {
